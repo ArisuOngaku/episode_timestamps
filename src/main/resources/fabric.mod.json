@@ -1,29 +1,28 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "episode_timestamps",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Episode Timestamps",
+  "description": "Displays a time marker at a configurable interval.",
   "authors": [
-    "Me!"
+    "Arisu"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/ArisuOngaku",
+    "sources": "https://github.com/ArisuOngaku/episode_timestamps"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/episode_timestamps/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "fr.arisu.episode_timestamps.EpisodeTimestamps"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
   ],
 
   "depends": {
