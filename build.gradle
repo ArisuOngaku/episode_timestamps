@@ -11,6 +11,7 @@ version = project.mod_version
 group = project.maven_group
 
 minecraft {
+	customManifest = "https://gist.githubusercontent.com/modmuss50/99327a581aca013586e5dad026bb5ef9/raw/671be0b7d92c94bac738e49b45d727664e58051c/1_14_combat-0.json"
 }
 
 dependencies {
