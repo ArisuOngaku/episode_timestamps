@@ -6,6 +6,8 @@ import net.minecraft.server.command.ServerCommandSource;
 
 import static com.mojang.brigadier.arguments.IntegerArgumentType.getInteger;
 import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
+import static com.mojang.brigadier.arguments.LongArgumentType.getLong;
+import static com.mojang.brigadier.arguments.LongArgumentType.longArg;
 import static fr.arisu.episode_timestamps.EpisodeTimestamps.formatMessage;
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -21,15 +23,17 @@ public class TimestampCommand {
         dispatcher.register(literal("timestamp")
                 .then(literal("set")
                         .then(literal("interval")
-                                .then(argument("interval", integer())
+                                .then(argument("interval", integer(1))
                                         .executes(context -> setInterval(context, getInteger(context, "interval")))
                                 )
                         )
                 )
                 .then(literal("start")
-                        .executes(context -> start(context, 0))
-                        .then(argument("startingOffset", integer())
-                                .executes(context -> start(context, getInteger(context, "startingOffset")))
+                        .executes(context -> start(context, 0, -1))
+                        .then(argument("timestampCount", integer())
+                                .then(argument("timeOffset", longArg(0))
+                                        .executes(context -> start(context, getInteger(context, "timestampCount"), getLong(context, "timeOffset")))
+                                )
                         )
                 )
         );
@@ -43,9 +47,9 @@ public class TimestampCommand {
         return 0;
     }
 
-    private int start(CommandContext<ServerCommandSource> context, int startingOffset) {
-        if (this.mod.start(startingOffset, context.getSource().getMinecraftServer())) {
-            context.getSource().sendFeedback(formatMessage("Episode timestamps started with offset " + startingOffset), true);
+    private int start(CommandContext<ServerCommandSource> context, int timestampCount, long timeOffset) {
+        if (this.mod.start(timestampCount, timeOffset)) {
+            context.getSource().sendFeedback(formatMessage("Episode timestamps started with count=" + timestampCount + " and timeOffset=" + timeOffset), true);
             return 1;
         }
         return 0;
